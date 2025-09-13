@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Inter:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222 84% 15%;
+    --card: 210 40% 98%;
+    --card-foreground: 222 84% 15%;
+    --popover: 210 40% 98%;
+    --popover-foreground: 222 84% 15%;
+    --primary: 217 33% 28%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 218 18% 45%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 211 70% 50%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 28%;
+    --input: 217 33% 28%;
+    --ring: 217 33% 28%;
+    --radius: 0.5rem;
+    --sketch-border: 2px solid #2D3748;
+    --sketch-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+    --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F7FAFC'/%3E%3Cpath d='M0 0L100 100M100 0L0 100' stroke='%23E2E8F0' stroke-width='0.5' opacity='0.3'/%3E%3C/svg%3E");
+    --pencil-stroke: linear-gradient(45deg, #2D3748 0%, #4A5568 100%);
+  }
+
+  .dark {
+    --background: 222 84% 15%;
+    --foreground: 210 40% 98%;
+    --card: 222 84% 15%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 84% 15%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 84% 15%;
+    --secondary: 217 33% 28%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 28%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 217 33% 28%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 28%;
+    --input: 217 33% 28%;
+    --ring: 217 33% 28%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* 手绘边框效果 */
+  .sketch-border {
+    border: var(--sketch-border);
+    border-radius: 2px;
+    position: relative;
+    background: var(--paper-texture);
+  }
+
+  .sketch-border::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: var(--pencil-stroke);
+    border-radius: 2px;
+    z-index: -1;
+    opacity: 0.3;
+  }
+
+  /* 纸张纹理 */
+  .paper-texture {
+    background-image: var(--paper-texture);
+    background-color: hsl(var(--background));
+    background-blend-mode: multiply;
+  }
+
+  /* 手绘阴影 */
+  .handwritten-shadow {
+    box-shadow: var(--sketch-shadow);
+    transform: rotate(-0.5deg);
+  }
+
+  /* 铅笔纹理 */
+  .pencil-texture {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.1) 2px,
+      rgba(0,0,0,0.1) 4px
+    );
+  }
+
+  /* 手写字体 */
+  .sketch-font {
+    font-family: 'Kalam', cursive;
+    letter-spacing: 0.5px;
+  }
+
+  /* 涂鸦装饰 */
+  .sketch-doodle {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.6;
+    animation: doodle-float 3s ease-in-out infinite;
+  }
+
+  /* 素描按钮 */
+  .sketch-button {
+    @apply sketch-border handwritten-shadow relative overflow-hidden transition-all duration-200 hover:scale-105 active:scale-95;
+  }
+
+  .sketch-button:hover {
+    filter: brightness(1.1);
+  }
+
+  /* 素描卡片 */
+  .sketch-card {
+    @apply sketch-border paper-texture handwritten-shadow p-6 relative;
+  }
+
+  /* 素描输入框 */
+  .sketch-input {
+    @apply border-b-2 border-foreground/50 bg-transparent outline-none transition-colors focus:border-primary sketch-font;
+  }
+
+  /* 素描进度条 */
+  .sketch-progress {
+    @apply relative h-4 bg-muted rounded-sm overflow-hidden;
+  }
+
+  .sketch-progress-bar {
+    @apply h-full bg-primary relative overflow-hidden;
+  }
+
+  .sketch-progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @apply pencil-texture;
+    opacity: 0.3;
+  }
+
+  /* 3D透视效果 */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
